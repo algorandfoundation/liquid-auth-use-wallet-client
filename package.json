@@ -14,12 +14,8 @@
   },
   "exports": {
     ".": {
-      "types": "./lib/index.d.ts",
+      "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
-    },
-    "./interfaces": {
-      "types": "./lib/interfaces.d.ts",
-      "default": "./lib/interfaces.js"
     }
   },
   "keywords": [],
