@@ -11,6 +11,12 @@
     "test": "jest",
     "clean": "rm -rf lib"
   },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
   "keywords": [],
   "author": "Algorand Foundation",
   "license": "AGPL-3.0",
