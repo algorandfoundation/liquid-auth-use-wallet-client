@@ -29,7 +29,7 @@ interface LiquidAuthSession {
     wallet: string;
 }
 
-export  interface LiquidAuthAPIJSON {
+export interface LiquidAuthAPIJSON {
     user: LiquidAuthUser;
     session: LiquidAuthSession;
 }
