@@ -16,6 +16,10 @@
     ".": {
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
+    },
+    "./interfaces": {
+      "types": "./lib/types/interfaces.d.ts",
+      "default": "./lib/interfaces.js"
     }
   },
   "keywords": [],
