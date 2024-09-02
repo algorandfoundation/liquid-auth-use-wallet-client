@@ -11,8 +11,8 @@
     "clean": "rm -rf dist"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Algorand Foundation",
+  "license": "AGPL-3.0",
   "dependencies": {
     "@algorandfoundation/liquid-client": "github:algorandfoundation/liquid-auth-js",
     "@algorandfoundation/provider": "github:algorandfoundation/wallet-provider-ts",
