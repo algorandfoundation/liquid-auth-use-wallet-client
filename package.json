@@ -1,5 +1,5 @@
 {
-  "name": "liquid-auth-use-wallet-client",
+  "name": "@algorandfoundation/liquid-auth-use-wallet-client",
   "version": "1.0.0",
   "description": "A TypeScript library for Liquid Auth's Use-Wallet Client",
   "main": "dist/index.js",
