@@ -2,13 +2,14 @@
   "name": "@algorandfoundation/liquid-auth-use-wallet-client",
   "version": "1.0.0",
   "description": "A TypeScript library for Liquid Auth's Use-Wallet Client",
-  "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "lib/index.js",
+  "type": "module",
+  "types": "lib/types/index.d.ts",
   "scripts": {
     "build": "tsc",
     "lint": "eslint 'src/**/*.ts'",
     "test": "jest",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf lib"
   },
   "keywords": [],
   "author": "Algorand Foundation",

@@ -1,14 +1,14 @@
 {
+    "include": ["./src/**/*.ts"],
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "outDir": "./dist",
+        "outDir": "./lib",
         "moduleResolution": "node", 
         "declaration": true,
-        "declarationDir": "./dist/types"
+        "declarationDir": "./lib/types"
     },
-    "exclude": ["node_modules", "dist"]
 }
