@@ -2,7 +2,7 @@ import { SignalClient } from '@algorandfoundation/liquid-client';
 import { decode } from 'cbor-x';
 import { fromBase64Url, toBase64URL, toSignTransactionsParamsRequestMessage } from '@algorandfoundation/provider';
 import { Transaction, encodeUnsignedTransaction } from 'algosdk';
-import { LiquidAuthAPIJSON, LiquidOptions } from './interfaces';
+import { LiquidAuthAPIJSON, LiquidOptions } from './interfaces.js';
 
 export class LiquidAuthClient {
     public client: SignalClient;
