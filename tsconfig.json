@@ -1,5 +1,6 @@
 {
     "include": ["./src/**/*.ts"],
+    "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__/**"],
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
@@ -11,4 +12,5 @@
         "declaration": true,
         "declarationDir": "./lib/types"
     },
+    
 }

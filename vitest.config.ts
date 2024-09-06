@@ -6,6 +6,8 @@ export default defineConfig({
     setupFiles: './globalTestSetup.ts',
     coverage: {
       include: ['src/**/*.ts'],
+      reporter: ['text', 'json-summary', 'lcov', 'json'],
+      reportsDirectory: './coverage',
     },
   },
 });
