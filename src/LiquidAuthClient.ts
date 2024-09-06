@@ -146,21 +146,24 @@ export class LiquidAuthClient {
       activeAddress: string,
       _indexesToSign?: number[],
     ): Promise<(Uint8Array | null)[]> {
-  
+    
       const messageId = SignalClient.generateRequestId();
+      // TODO: Replace with an actual provider ID, though it is not necessary for the Liquid Auth flow
       const providerId = "02657eaf-be17-4efc-b0a4-19d654b2448e";
-  
+    
       if (!this.dataChannel) {
         throw new Error('Data channel not set yet!');
       }
-  
-      const awaitResponse = (): Promise<(Uint8Array | null)[]> => new Promise((resolve) => {
+    
+      const awaitResponse = (): Promise<(Uint8Array | null)[]> => new Promise((resolve, reject) => {
         if (this.dataChannel) {
           this.dataChannel.onmessage = async (evt: { data: string }) => {
             const message = decode(fromBase64Url(evt.data));
-            console.log("Received message:", message);
             if (message.reference === 'arc0027:sign_transactions:response') {
-              if (message.requestId !== messageId) return;
+              if (message.requestId !== messageId) {
+                reject(new Error('Request ID mismatch'));
+                return;
+              }
               const encodedSignatures = message.result.stxns;
               const transactionsToSend = (txnGroup as Transaction[]).map((txn, idx) => {
                 return txn.attachSignature(activeAddress, fromBase64Url(encodedSignatures[idx]));
@@ -170,13 +173,14 @@ export class LiquidAuthClient {
           };
         }
       });
-  
+    
       const encodedStr = toSignTransactionsParamsRequestMessage(
         messageId,
         providerId,
         txnGroup.map((txn) => ({ txn: toBase64URL(encodeUnsignedTransaction(txn as Transaction)) }))
       );
-  
+    
+      console.log("Sending message:", encodedStr);
       this.dataChannel.send(encodedStr);
       return await awaitResponse();
     }
