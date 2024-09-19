@@ -75,7 +75,7 @@
       ]
     ],
     "branches": [
-      "release",
+      "release/*",
       {
         "name": "main",
         "prerelease": "canary"
