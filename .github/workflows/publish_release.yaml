@@ -1,0 +1,53 @@
+name: Publish Release
+
+on:
+  push:
+    branches:
+      - main
+      - release/1.x
+  workflow_dispatch:
+
+concurrency: release
+
+permissions:
+  contents: write
+  issues: write
+  checks: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      # semantic-release needs node 20
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: "Build"
+        run: pnpm run build
+
+      - name: "Semantic release"
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Merge Release -> Trunk
+        uses: devmasx/merge-branch@854d3ac71ed1e9deb668e0074781b81fdd6e771f
+        if: github.ref == 'refs/heads/release/1.x'
+        with:
+          type: now
+          from_branch: release/1.x
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
