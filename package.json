@@ -1,5 +1,5 @@
 {
-  "name": "@algorandfoundation/liquid-auth-use-wallet-client",
+  "name": "hmd2v-fork-liquid-auth-use-wallet-client",
   "version": "0.0.1",
   "description": "A TypeScript library for Liquid Auth's Use-Wallet Client",
   "main": "lib/index.js",
@@ -10,7 +10,6 @@
     "lint": "eslint 'src/**/*.ts'",
     "test": "vitest",
     "clean": "rm -rf lib",
-    "postinstall": "tsc",
     "coverage": "vitest run --coverage"
   },
   "exports": {
@@ -38,8 +37,49 @@
     "eslint": "^9.9.1",
     "globals": "^15.9.0",
     "jsdom": "^25.0.0",
+    "semantic-release": "^24.1.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.1",
     "typescript": "^4.9.5",
     "typescript-eslint": "^8.3.0",
     "vitest": "^2.0.5"
+  },
+  "repository": "git@github.com:hashmapsdata2value/hmd2v-fork-liquid-auth-use-wallet-client",
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json"
+          ],
+          "message": "chore(release): Liquid Auth Use-Wallet Client \n\n${nextRelease.notes}"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "successComment": false
+        }
+      ]
+    ],
+    "branches": [
+      "release/*",
+      {
+        "name": "main",
+        "prerelease": "canary"
+      }
+    ]
   }
 }
