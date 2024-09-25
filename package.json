@@ -1,5 +1,5 @@
 {
-  "name": "hmd2v-fork-liquid-auth-use-wallet-client",
+  "name": "hmd2v-fork-2-liquid-auth-use-wallet-client",
   "version": "0.0.1",
   "description": "A TypeScript library for Liquid Auth's Use-Wallet Client",
   "main": "lib/index.js",
@@ -45,7 +45,7 @@
     "typescript-eslint": "^8.3.0",
     "vitest": "^2.0.5"
   },
-  "repository": "git@github.com:hashmapsdata2value/hmd2v-fork-liquid-auth-use-wallet-client",
+  "repository": "git@github.com:hashmapsdata2value/hmd2v-fork-2-liquid-auth-use-wallet-client",
   "files": [
     "lib",
     "README.md",
