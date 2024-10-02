@@ -1,3 +1,3 @@
-export { LiquidAuthClient } from './LiquidAuthClient.js';
-export type { LiquidOptions } from './interfaces.js';
-export { ICON } from './icon.js';
+export { LiquidAuthClient } from './LiquidAuthClient';
+export type { LiquidOptions } from './interfaces';
+export { ICON } from './icon';
