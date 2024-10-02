@@ -6,7 +6,7 @@
   "type": "module",
   "types": "lib/types/index.d.ts",
   "scripts": {
-    "build": "tsc && tsc-alias",
+    "build": "tsc && tsc-alias -p tsconfig.json -f",
     "lint": "eslint 'src/**/*.ts'",
     "test": "vitest",
     "clean": "rm -rf lib",
