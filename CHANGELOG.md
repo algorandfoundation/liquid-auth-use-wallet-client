@@ -1,3 +1,10 @@
+# [1.0.0-canary.2](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.0.0-canary.1...v1.0.0-canary.2) (2024-10-04)
+
+
+### Bug Fixes
+
+* ensure close button also triggers cleanup ([5c12328](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/5c123287e7820b7d386b379ce95352043ec66ce0))
+
 # 1.0.0-canary.1 (2024-10-02)
 
 
