@@ -255,9 +255,12 @@ export class LiquidAuthClient {
         document.body.appendChild(this.modalElement);
   
         const closeButton = this.modalElement.querySelector('.close-button') as HTMLElement;
-        const hideListener = () => this.hideModal();
-        closeButton.addEventListener('click', hideListener);
-        this.eventListeners.push({ element: closeButton, type: 'click', listener: hideListener });
+        const closeListener = () => {
+          this.hideModal();
+          this.cleanUp();
+        };
+        closeButton.addEventListener('click', closeListener);
+        this.eventListeners.push({ element: closeButton, type: 'click', listener: closeListener });
   
         const startButton = this.modalElement.querySelector('#start') as HTMLButtonElement;
         const startListener = () => this.handleOfferClient();
