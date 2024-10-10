@@ -333,6 +333,25 @@ describe('LiquidAuthClient', () => {
     expect(client['modalElement']).toBeNull();
   });
 
+  it('close button: should hide modal and clean up', () => {
+    // Mock the methods to verify they are called
+    vi.spyOn(client, 'hideModal');
+    vi.spyOn(client, 'cleanUp');
+  
+    // Show the modal to add it to the DOM
+    client.showModal('request-id', 'alt-request-id');
+  
+    // Find the close button
+    const closeButton = client['modalElement']!.querySelector('.close-button') as HTMLElement;
+  
+    // Simulate a click event on the close button
+    closeButton.click();
+  
+    // Verify that hideModal and cleanUp were called
+    expect(client.hideModal).toHaveBeenCalled();
+    expect(client.cleanUp).toHaveBeenCalled();
+  });
+
   it('handleOfferClient: should handle offer client when QR link element exists', async () => {
     const mockModalElement = document.createElement('div');
     mockModalElement.innerHTML = `
