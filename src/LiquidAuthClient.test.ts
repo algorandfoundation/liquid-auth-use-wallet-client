@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { LiquidAuthClient } from './LiquidAuthClient';
 import { SignalClient } from '@algorandfoundation/liquid-client';
-import { LiquidOptions } from './interfaces.js';
+import { LiquidOptions } from './interfaces';
 import { JSDOM } from 'jsdom';
-import algosdk, { decodeSignedTransaction, Transaction } from 'algosdk';
-import { decode, encode } from 'cbor-x';
+import { Transaction } from 'algosdk';
+import { encode } from 'cbor-x';
 import { fromBase64Url, toBase64URL } from '@algorandfoundation/provider';
 
 // Setup jsdom
@@ -331,6 +331,25 @@ describe('LiquidAuthClient', () => {
     client.cleanUp();
     expect(client['eventListeners'].length).toBe(0);
     expect(client['modalElement']).toBeNull();
+  });
+
+  it('close button: should hide modal and clean up', () => {
+    // Mock the methods to verify they are called
+    vi.spyOn(client, 'hideModal');
+    vi.spyOn(client, 'cleanUp');
+  
+    // Show the modal to add it to the DOM
+    client.showModal('request-id', 'alt-request-id');
+  
+    // Find the close button
+    const closeButton = client['modalElement']!.querySelector('.close-button') as HTMLElement;
+  
+    // Simulate a click event on the close button
+    closeButton.click();
+  
+    // Verify that hideModal and cleanUp were called
+    expect(client.hideModal).toHaveBeenCalled();
+    expect(client.cleanUp).toHaveBeenCalled();
   });
 
   it('handleOfferClient: should handle offer client when QR link element exists', async () => {
