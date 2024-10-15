@@ -13,5 +13,5 @@ Then use `pnpm run build` to build the lib, and `pnpm run test` or `pnpm run cov
 This package can be found on NPM and downloaded as such:
 
 ```bash
-npm i @algorandfoundation/xhd-wallet-api
+npm i @algorandfoundation/liquid-auth-use-wallet-client
 ```
