@@ -1,3 +1,15 @@
+# [1.1.0-canary.1](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.0.0...v1.1.0-canary.1) (2024-10-15)
+
+
+### Bug Fixes
+
+* npm package ([d4a544a](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/d4a544a6d56daf7108b0199137668b179061b46b))
+
+
+### Features
+
+* adds doc ([f25e1af](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/f25e1aff09e9b5b87d8416eb4d47ae3a15c34810))
+
 # 1.0.0 (2024-10-10)
 
 
