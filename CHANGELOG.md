@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.1.0...v1.2.0) (2025-01-29)
+
+
+### Features
+
+* upgrade to  algosdk v3 ([7206908](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/7206908e05f644b1aa6908aacbd13807861f3821))
+
 # [1.2.0-canary.1](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.1.0...v1.2.0-canary.1) (2025-01-29)
 
 
