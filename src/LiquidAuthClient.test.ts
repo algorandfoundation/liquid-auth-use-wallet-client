@@ -3,7 +3,7 @@ import { LiquidAuthClient } from './LiquidAuthClient';
 import { SignalClient } from '@algorandfoundation/liquid-client';
 import { LiquidOptions } from './interfaces';
 import { JSDOM } from 'jsdom';
-import { Transaction } from 'algosdk';
+import { makePaymentTxnWithSuggestedParamsFromObject } from 'algosdk';
 import { encode } from 'cbor-x';
 import { fromBase64Url, toBase64URL } from '@algorandfoundation/provider';
 
@@ -230,15 +230,16 @@ describe('LiquidAuthClient', () => {
       fee: 0,
       firstRound: 43564565,
       lastRound: 43565565,
+      firstValid: 43564565,
+      lastValid: 43565565,
       genesisID: 'testnet-v1.0',
-      genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       minFee: 1000,
     };
 
     const txnGroup = [
-      new Transaction({
-        from: algoAddress,
-        to: algoAddress,
+      makePaymentTxnWithSuggestedParamsFromObject({
+        sender: algoAddress,
+        receiver: algoAddress,
         amount: 0,
         suggestedParams,
       }),
