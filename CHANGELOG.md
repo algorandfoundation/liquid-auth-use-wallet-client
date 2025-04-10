@@ -1,3 +1,10 @@
+# [1.3.0-canary.1](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.2.1...v1.3.0-canary.1) (2025-04-10)
+
+
+### Features
+
+* add origin an optional option ([bb2cde4](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/bb2cde45a338e505b23b2b1f046f4b94ba2f270d))
+
 ## [1.2.1](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.2.0...v1.2.1) (2025-04-10)
 
 
