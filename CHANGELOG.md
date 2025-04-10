@@ -1,3 +1,10 @@
+## [1.2.1-canary.1](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.2.0...v1.2.1-canary.1) (2025-04-10)
+
+
+### Bug Fixes
+
+* bump liquid-client ([9751edf](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/9751edf453aae270eaf37185bb39ad981fa8bdb2))
+
 # [1.2.0](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.1.0...v1.2.0) (2025-01-29)
 
 
