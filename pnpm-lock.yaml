@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@algorandfoundation/liquid-client':
-        specifier: github:algorandfoundation/liquid-auth-js
-        version: https://codeload.github.com/algorandfoundation/liquid-auth-js/tar.gz/0958cb96627b5ead1ef5cfbdc4f47fe43a2e4908
+        specifier: 1.0.0-canary.3
+        version: 1.0.0-canary.3
       '@algorandfoundation/provider':
         specifier: github:algorandfoundation/wallet-provider-ts
         version: https://codeload.github.com/algorandfoundation/wallet-provider-ts/tar.gz/28c80f5b9e0259b8e83e65c65d802d8123de9046
@@ -63,9 +63,8 @@ importers:
 
 packages:
 
-  '@algorandfoundation/liquid-client@https://codeload.github.com/algorandfoundation/liquid-auth-js/tar.gz/0958cb96627b5ead1ef5cfbdc4f47fe43a2e4908':
-    resolution: {tarball: https://codeload.github.com/algorandfoundation/liquid-auth-js/tar.gz/0958cb96627b5ead1ef5cfbdc4f47fe43a2e4908}
-    version: 1.0.0-canary.3
+  '@algorandfoundation/liquid-client@1.0.0-canary.3':
+    resolution: {integrity: sha512-QbHKeGPjx2RMNh29PSoVr9i98KVn593dppoS7jjqgum5kFobxGZ8kfpEEbOSGbt6qzw1vfL4iM2yhl4g5kAasg==}
 
   '@algorandfoundation/provider@https://codeload.github.com/algorandfoundation/wallet-provider-ts/tar.gz/28c80f5b9e0259b8e83e65c65d802d8123de9046':
     resolution: {tarball: https://codeload.github.com/algorandfoundation/wallet-provider-ts/tar.gz/28c80f5b9e0259b8e83e65c65d802d8123de9046}
@@ -2683,7 +2682,7 @@ packages:
 
 snapshots:
 
-  '@algorandfoundation/liquid-client@https://codeload.github.com/algorandfoundation/liquid-auth-js/tar.gz/0958cb96627b5ead1ef5cfbdc4f47fe43a2e4908':
+  '@algorandfoundation/liquid-client@1.0.0-canary.3':
     dependencies:
       '@algorandfoundation/qr-code-styling': https://codeload.github.com/algorandfoundation/qr-code-styling/tar.gz/ce8541ee1cb3b0ab2acd9926f3092d4ab217e276
       canvas: 2.11.2
