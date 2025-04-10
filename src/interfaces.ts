@@ -1,8 +1,9 @@
 export interface LiquidOptions {
+    origin?: string;
     RTC_config_username: string;
     RTC_config_credential: string;
-  }
-  
+}
+
 interface PassKeyCredential {
     device: string;
     publicKey: string;
