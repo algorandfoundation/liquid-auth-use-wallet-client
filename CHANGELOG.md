@@ -1,3 +1,10 @@
+# [1.4.0-canary.1](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.3.0...v1.4.0-canary.1) (2025-04-11)
+
+
+### Features
+
+* return address on connection ([ca340b2](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/ca340b213cb278b0dd9e5fabb7fe4beaf7e53f13))
+
 # [1.3.0](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.2.1...v1.3.0) (2025-04-10)
 
 
