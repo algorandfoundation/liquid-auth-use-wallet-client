@@ -67,7 +67,7 @@ export class LiquidAuthClient {
 
   async logOutSession(): Promise<boolean> {
     try {
-      const response = await fetch(`${window.origin}/auth/logout`, {
+      const response = await fetch(`${this.options.origin || window.origin}/auth/logout`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
