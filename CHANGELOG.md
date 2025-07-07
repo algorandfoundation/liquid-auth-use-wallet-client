@@ -1,3 +1,17 @@
+# [1.4.0-canary.2](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.4.0-canary.1...v1.4.0-canary.2) (2025-07-07)
+
+
+### Bug Fixes
+
+* consider origin in disconnect ([19031b8](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/19031b81f6b5d3ab0932c82ba079f42c66f318d1))
+
+# [1.4.0-canary.1](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.3.0...v1.4.0-canary.1) (2025-04-11)
+
+
+### Features
+
+* return address on connection ([ca340b2](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/commit/ca340b213cb278b0dd9e5fabb7fe4beaf7e53f13))
+
 # [1.3.0](https://github.com/algorandfoundation/liquid-auth-use-wallet-client/compare/v1.2.1...v1.3.0) (2025-04-10)
 
 

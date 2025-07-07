@@ -6,11 +6,12 @@ import { JSDOM } from 'jsdom';
 import { makePaymentTxnWithSuggestedParamsFromObject } from 'algosdk';
 import { encode } from 'cbor-x';
 import { fromBase64Url, toBase64URL } from '@algorandfoundation/provider';
+import {INVALID_DATACHANNEL_CALLBACK} from "./exceptions";
 
 // Setup jsdom
 const { window } = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-global.window = window;
-global.document = window.document;
+(globalThis.window as unknown) = window;
+globalThis.document = window.document;
 
 
 // Mock SignalClient
@@ -21,9 +22,8 @@ vi.mock('@algorandfoundation/liquid-client', () => {
     on = vi.fn();
     qrCode = vi.fn().mockResolvedValue('mocked-qr-code');
     deepLink = vi.fn().mockReturnValue('mocked-deep-link');
+    static generateRequestId = vi.fn().mockReturnValue('mocked-request-id');
   }
-
-  MockSignalClient.generateRequestId = vi.fn().mockReturnValue('mocked-request-id');
 
   return {
     SignalClient: MockSignalClient,
@@ -51,12 +51,10 @@ describe('LiquidAuthClient', () => {
 
   it('connect: should connect and show modal', async () => {
     const showModalSpy = vi.spyOn(client, 'showModal');
-    const waitForLinkedBoolSpy = vi.spyOn(client, 'waitForLinkedBool').mockResolvedValue();
 
     await client.connect();
 
-    expect(showModalSpy).toHaveBeenCalledWith('mocked-request-id', 'mocked-request-id');
-    expect(waitForLinkedBoolSpy).toHaveBeenCalled();
+    expect(showModalSpy).toHaveBeenCalledWith('mocked-request-id');
   });
 
   it('disconnect: should disconnect and clean up', async () => {
@@ -83,91 +81,28 @@ describe('LiquidAuthClient', () => {
     expect(client['dataChannel']).toBe(dataChannel);
   });
 
-  it('onLinkMessage: should handle link message correctly', async () => {
-    const checkSessionSpy = vi.spyOn(client, 'checkSession').mockResolvedValue({
-      user: { wallet: 'test-wallet' },
-    });
-
-    await client.onLinkMessage({ wallet: 'test-wallet' });
-
-    expect(checkSessionSpy).toHaveBeenCalled();
-    expect(client.linkedBool).toBe(true);
-  });
-
-  it('onLinkMessage: should throw error if wallet does not match', async () => {
-    vi.spyOn(client, 'checkSession').mockResolvedValue({
-      user: { wallet: 'different-wallet' },
-    });
-
-    await expect(client.onLinkMessage({ wallet: 'test-wallet' })).rejects.toThrow(
-      'Remote wallet address and /auth/session wallet address do not match'
-    );
-  });
-
-  it('onLinkMessage: should throw error if wallet field is missing', async () => {
-    await expect(client.onLinkMessage({})).rejects.toThrow('Wallet field not part of link message');
-  });
-
-  it('checkSession: should check session', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: true,
-      json: vi.fn().mockResolvedValue({ user: { wallet: 'test-wallet' } }),
-    });
-
-    const session = await client.checkSession();
-    expect(session).toEqual({ user: { wallet: 'test-wallet' } });
-  });
-
-  it('checkSession: should return null if session is not found', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: false,
-    } as any);
-
-    const data = await client.checkSession();
-
-    expect(data).toBeNull();
-  });
-
-  it('checkSession: should return null if an error occurs while checking session', async () => {
-    global.fetch = vi.fn().mockRejectedValue(new Error('Network error'));
-
-    const data = await client.checkSession();
-
-    expect(data).toBeNull();
-  });
-
   it('logOutSession: should log out session', async () => {
-    vi.spyOn(client, 'checkSession').mockResolvedValue({ user: null });
-    global.fetch = vi.fn().mockResolvedValue({ status: 200 });
-
-    const checkSessionSpy = vi.spyOn(client, 'checkSession').mockResolvedValue({
-      user: null,
-    });
+    globalThis.fetch = vi.fn().mockResolvedValue({ status: 200 });
 
     const result = await client.logOutSession();
 
     expect(result).toBe(true);
-    expect(checkSessionSpy).toHaveBeenCalled();
   });
 
   it('logOutSession: should fail to log out session', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
+    globalThis.fetch = vi.fn().mockResolvedValue({
       status: 200,
     });
 
-    const checkSessionSpy = vi.spyOn(client, 'checkSession').mockResolvedValue({
-      user: { wallet: 'test-wallet' },
-    });
 
     const result = await client.logOutSession();
 
-    expect(result).toBe(false);
-    expect(checkSessionSpy).toHaveBeenCalled();
+    expect(result).toBe(true);
   });
 
   it('logOutSession: should return false and log the status code if logout response status is not 200 or 302', async () => {
     const consoleLogSpy = vi.spyOn(console, 'log');
-    global.fetch = vi.fn().mockResolvedValue({
+    globalThis.fetch = vi.fn().mockResolvedValue({
       status: 400,
     });
 
@@ -180,21 +115,27 @@ describe('LiquidAuthClient', () => {
   it('logOutSession: should return false and log the error if an exception is thrown during logout', async () => {
     const consoleErrorSpy = vi.spyOn(console, 'error');
     const mockError = new Error('Network error');
-    global.fetch = vi.fn().mockRejectedValue(mockError);
+    globalThis.fetch = vi.fn().mockRejectedValue(mockError);
 
     const result = await client.logOutSession();
 
     expect(result).toBe(false);
     expect(consoleErrorSpy).toHaveBeenCalledWith('Error logging out:', mockError);
   });
-
+  it('handleOfferClient: should fail without a callback', async () => {
+    await expect(()=>{
+      // @ts-expect-error, testing failure
+      return client.handleOfferClient()
+    }).rejects.toThrow(INVALID_DATACHANNEL_CALLBACK);
+  })
   it('handleDataChannel: should handle data channel messages and set the data channel', () => {
     const mockDataChannel = {
-      onmessage: null,
+      onmessage: ()=>{},
     } as unknown as RTCDataChannel;
 
     const setDataChannelSpy = vi.spyOn(client, 'setDataChannel');
 
+    // @ts-expect-error, testing private methods
     client.handleDataChannel(mockDataChannel);
 
     expect(setDataChannelSpy).toHaveBeenCalledWith(mockDataChannel);
@@ -312,35 +253,34 @@ describe('LiquidAuthClient', () => {
     await expect(promiseMismatch).rejects.toThrow('Request ID mismatch');
   });
 
-  it('showModal: should show modal', () => {
-    client.showModal('request-id', 'alt-request-id');
+  it('showModal: should show modal', async () => {
+    await client.showModal('request-id');
 
     expect(client['requestId']).toBe('request-id');
-    expect(client['altRequestId']).toBe('alt-request-id');
     expect(client['modalElement']).toBeDefined();
     expect(client['modalElement']!.classList.contains('hidden')).toBe(false);
   });
 
-  it('hideModal: should hide modal', () => {
-    client.showModal('request-id', 'alt-request-id');
+  it('hideModal: should hide modal', async () => {
+    await client.showModal('request-id');
     client.hideModal();
     expect(client['modalElement']!.classList.contains('hidden')).toBe(true);
   });
 
-  it('cleanUp: should clean up', () => {
-    client.showModal('request-id', 'alt-request-id');
+  it('cleanUp: should clean up', async () => {
+    await client.showModal('request-id');
     client.cleanUp();
     expect(client['eventListeners'].length).toBe(0);
     expect(client['modalElement']).toBeNull();
   });
 
-  it('close button: should hide modal and clean up', () => {
+  it('close button: should hide modal and clean up', async () => {
     // Mock the methods to verify they are called
     vi.spyOn(client, 'hideModal');
     vi.spyOn(client, 'cleanUp');
   
     // Show the modal to add it to the DOM
-    client.showModal('request-id', 'alt-request-id');
+    await client.showModal('request-id');
   
     // Find the close button
     const closeButton = client['modalElement']!.querySelector('.close-button') as HTMLElement;
@@ -369,11 +309,12 @@ describe('LiquidAuthClient', () => {
     client['client'].peer = mockPeer;
     client['client'].qrCode = mockQRCode;
     client['client'].deepLink = mockDeepLink;
-  
+
+    // @ts-expect-error, testing private methods
     const handleDataChannelSpy = vi.spyOn(client, 'handleDataChannel');
-    const onLinkMessageSpy = vi.spyOn(client, 'onLinkMessage');
   
     // Mock the client.on method to simulate the link-message event
+    // @ts-expect-error, testing private methods
     client['client'].on = vi.fn((event, callback) => {
       if (event === 'link-message') {
         setTimeout(() => {
@@ -389,7 +330,7 @@ describe('LiquidAuthClient', () => {
     console.log('Before handleOfferClient:');
     console.log(mockModalElement.innerHTML);
   
-    await client['handleOfferClient']();
+    await client['handleOfferClient'](()=>{});
   
     // Wait for the setTimeout to complete
     await new Promise((resolve) => setTimeout(resolve, 10));
@@ -412,11 +353,7 @@ describe('LiquidAuthClient', () => {
   
     const deepLink = mockModalElement.querySelector('#qr-link') as HTMLAnchorElement;
     expect(deepLink.href).toBe('test-deep-link'); // Corrected expectation
-  
-    const startButton = mockModalElement.querySelector('#start') as HTMLButtonElement;
-    expect(startButton.classList.contains('hidden')).toBe(true);
-  
-    expect(onLinkMessageSpy).toHaveBeenCalled();
+
   });
   
 
@@ -426,17 +363,8 @@ describe('LiquidAuthClient', () => {
 
     const consoleErrorSpy = vi.spyOn(console, 'error');
 
-    await client['handleOfferClient']();
+    await client['handleOfferClient'](()=>{});
 
     expect(consoleErrorSpy).toHaveBeenCalledWith('QR link element not found');
-  });
-
-  it('waitForLinkedBool: should wait for linkedBool to be true', async () => {
-    setTimeout(() => {
-      client['linkedBool'] = true;
-    }, 100);
-
-    await client.waitForLinkedBool();
-    expect(client['linkedBool']).toBe(true);
   });
 });
